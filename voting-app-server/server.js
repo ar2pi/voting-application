@@ -1,18 +1,31 @@
-// server.js
 const express = require('express');
 const bodyParser = require('body-parser');
 const redis = require('redis');
 const cors = require('cors');
 
 const app = express();
-const client = redis.createClient();
+
+// Updated Redis connection to use the Redis service in Docker
+const client = redis.createClient({
+    url: 'redis://redis:6379' // Connect to the Redis service running in Docker
+});
+
 const PORT = 5000;
 
 app.use(cors());
 app.use(bodyParser.json());
 
 client.on('error', (err) => console.log('Redis Client Error', err));
-client.connect();
+
+// Ensure Redis is connected before proceeding
+(async () => {
+    try {
+        await client.connect();
+        console.log('Connected to Redis');
+    } catch (err) {
+        console.error('Failed to connect to Redis:', err);
+    }
+})();
 
 app.post('/api/topics', async (req, res) => {
     const { topic, description } = req.body;
@@ -51,7 +64,6 @@ app.post('/api/topics/:topic/vote', async (req, res) => {
     res.json({ message: 'Vote counted!' });
 });
 
-
 app.get('/api/topics/:topic/results', async (req, res) => {
     const topic = req.params.topic;
     const votes = JSON.parse(await client.hGet('votes', topic)) || [];
@@ -69,7 +81,6 @@ app.get('/api/topics/:topic/results', async (req, res) => {
         }
     });
 });
-
 
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
