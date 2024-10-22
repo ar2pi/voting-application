@@ -75,8 +75,8 @@
   
   1. Install Homebrew (if not already installed): Open a terminal and run:
 
-    ```bash
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+     ```bash
+      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
        
 2. Install Redis:
     ```bash
