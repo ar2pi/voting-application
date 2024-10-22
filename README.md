@@ -64,9 +64,8 @@ Replace the values with your own database credentials, a secret key for JWT, you
 
 4. **Create a new folder named uploads chat-app-backend folder if not exist , and inside it, create another folder named profile_pictures. This folder will store user profile pictures**:
 
-   ```bash
-   mkdir uploads
-   mkdir uploads/profile_pictures   
+       mkdir uploads
+       mkdir uploads/profile_pictures   
 
 5. **Start the Application**:
 ### Start the Next.js Development Server:
