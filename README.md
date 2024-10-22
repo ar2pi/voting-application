@@ -72,7 +72,8 @@
   You should receive a response of PONG.
 
   For macOS
-      1. Install Homebrew (if not already installed): Open a terminal and run:
+  
+  1. Install Homebrew (if not already installed): Open a terminal and run:
 
     ```bash
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
