@@ -29,13 +29,13 @@
       Express.js
       Redis
      
-  **Installation**  
-     ## Prerequisites
+  # Installation 
+  Prerequisites
           Node.js (latest version recommended)
           Redis server
           
   **Installing Redis**
-      For Windows
+     **For Windows**
    1. Download Redis:
             Go to the Redis for Windows GitHub page.
             Download the latest .msi installer.
@@ -49,7 +49,7 @@
          ```bash
          redis-server
             
-  For Ubuntu
+  **For Ubuntu**
     1. Update package index:
         ```bash
         sudo apt update
@@ -107,35 +107,35 @@
      
  **Frontend Setup**
 
-  4.  Navigate to the frontend directory:
+  1.  Navigate to the frontend directory:
       ```bash
         cd ../voting-app-client
         
-  5. Install dependencies:
+  2. Install dependencies:
      ```bash
         npm install
         # or
         yarn install
 
-  6. Start the frontend server:
+  3. Start the frontend server:
      ```bash
         npm start
 
 
-**API Endpoints**:
-  POST /api/topics: Creates a new topic.
-  GET /api/topics/
-  /vote: Retrieves topic details for voting.
-  POST /api/topics/
-  /vote: Submits a vote.
-  GET /api/topics/
-  /results: Retrieves voting results.
+## API Endpoints
+     POST /api/topics: Creates a new topic.
+     GET /api/topics/
+     /vote: Retrieves topic details for voting.
+     POST /api/topics/
+     /vote: Submits a vote.
+     GET /api/topics/
+     /results: Retrieves voting results.
 
-**Database Structure**:
+## Database Structure
   Topics: Stored in Redis as hash fields. Each topic includes a description.
   Votes: Stored as JSON strings in Redis, tracking user votes for each topic.
 
- **Node Dependencies**:
+ ## Node Dependencies
   1. Frontend
         react: For building the user interface.
         react-router-dom: For routing between pages.
@@ -149,11 +149,11 @@
         cors: For enabling CORS.
         redis: For connecting to the Redis database.
         
-  **Contributing**:
+  ## Contributing
       Contributions are welcome! If you'd like to report a bug or suggest a feature, please open an issue on the GitHub repository.
 
-  **License**:
+  ## License
       This project is licensed under the MIT License.
 
-  **Acknowledgments**:
+  ## Acknowledgments
       Special thanks to the communities and libraries that made this project possible.
