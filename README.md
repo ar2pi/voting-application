@@ -1,20 +1,20 @@
-## Voting App
-# Overview
+# Voting App
+## Overview
   The Voting App is a real-time web application that allows users to create topics for voting and express their opinions. Built using React for the frontend and Node.js with Redis for the backend, the app provides an intuitive interface for users to engage in discussions and vote on various topics.
 
-# Features
+## Features
   Create Voting Topics: Users can create a new topic with a description.
   Vote on Topics: Users can express their agreement or disagreement with a topic.
   View Results: Users can see how many votes each topic received.
   
-# Screenshots
+## Screenshots
   1. **Create Topic Page**:
 
   2. **Vote Page**:
 
   3. **Results Page**:
 
-# Technologies Used
+## Technologies Used
    1. **Frontend**:
 
       React
@@ -30,12 +30,12 @@
       Redis
      
   **Installation**  
-     # Prerequisites
+     ## Prerequisites
           Node.js (latest version recommended)
           Redis server
           
   **Installing Redis**:
-      #For Windows
+      For Windows
           1. Download Redis:
     
             Go to the Redis for Windows GitHub page.
@@ -52,7 +52,7 @@
                 ```bash
                 redis-server
             
-        # For Ubuntu
+        For Ubuntu
             1. Update package index:
                 ```bash
                 sudo apt update
@@ -70,7 +70,7 @@
          
                You should receive a response of PONG.
 
-        # For macOS
+        For macOS
             1. Install Homebrew (if not already installed): Open a terminal and run:
 
                 ```bash
