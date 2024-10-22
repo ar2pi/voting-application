@@ -41,26 +41,26 @@ To run the application locally, follow these steps:
    EMAIL_USER=your_nodemailer_email
    EMAIL_PASS=your_nodemailer_password
 
-Replace the values with your own database credentials, a secret key for JWT, your Cloudinary URL, and your Nodemailer email and password.   
+  Replace the values with your own database credentials, a secret key for JWT, your Cloudinary URL, and your Nodemailer email and password.   
 
-3. **Install Dependencies for All Servers and also check node version is updated**:
-   ```bash
-   node -v
+ 3. **Install Dependencies for All Servers and also check node version is updated**:
     
-**For Next.js**:
+        node -v
+
+    **For Next.js**:
 
     
-    cd chat-app
-    npm install
-    # or
-    yarn install
+        cd chat-app
+        npm install
+        # or
+        yarn install
 
-**For Node.js backend**
+    **For Node.js backend**
 
-    cd chat-app-backend
-    npm install
-    # or
-    yarn install   
+        cd chat-app-backend
+        npm install
+        # or
+        yarn install   
 
 4. **Create a new folder named uploads chat-app-backend folder if not exist , and inside it, create another folder named profile_pictures. This folder will store user profile pictures**:
 
@@ -68,26 +68,26 @@ Replace the values with your own database credentials, a secret key for JWT, you
        mkdir uploads/profile_pictures   
 
 5. **Start the Application**:
-### Start the Next.js Development Server:
+   ### Start the Next.js Development Server:
 
-    cd chat-app
-    npm run dev
-    # or
-    yarn dev   
+       cd chat-app
+       npm run dev
+       # or
+       yarn dev   
 
-### Start the Node.js Backend Server:  
+   ### Start the Node.js Backend Server:  
 
-    cd chat-app-backend
-    npm run dev
-    # or
-    yarn dev   
+       cd chat-app-backend
+       npm run dev
+       # or
+       yarn dev   
 
-### Start the WebSocket Server:
+   ### Start the WebSocket Server:
   
-    cd socket
-    npm start
-    # or
-     yarn start  
+       cd socket
+       npm start
+       # or
+       yarn start  
 
 6. **Usage**:
 
