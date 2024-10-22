@@ -1,180 +1,118 @@
-# Voting App
+# ChatApp
+
 ## Overview
-  The Voting App is a real-time web application that allows users to create topics for voting and express their opinions. Built using React for the frontend and Node.js with Redis for the backend, the app provides an intuitive interface for users to engage in discussions and vote on various topics.
+ChatApp is a real-time messaging application built with Next.js, React, and Socket.IO. It allows users to create accounts, add friends, and engage in conversations.
 
+## Features
+- User authentication and authorization
+- Real-time messaging with Socket.IO
+- Friend management (add, remove, block)
+- Group chats
+- User profile management
+- Settings and customization options
 
-## Screenshots
+## Technologies Used
+- **Frontend**: Next.js, React, React Hook Form, Tailwind CSS
+- **Backend**: Node.js, Express.js, Sequelize, PostgreSQL
+- **Real-time communication**: Socket.IO
+- **Authentication**: JSON Web Tokens (JWT)
 
-  1. **Create Topic Page**:
-     ![Screenshot 2024-10-22 132302](https://github.com/user-attachments/assets/5c42b166-1b95-4102-b50b-0f087036fc4c)
-     ![Screenshot 2024-10-22 132333](https://github.com/user-attachments/assets/e0bc4312-b036-4dc8-8be2-44f1041356e1)
+## Installation
 
-  3. **Vote Page**:
-     ![Screenshot 2024-10-22 132410](https://github.com/user-attachments/assets/ecd4d6df-5583-4dce-9d9e-21bb9fc147f2)
+To run the application locally, follow these steps:
 
-  5. **Results Page**:
-      ![Screenshot 2024-10-22 132422](https://github.com/user-attachments/assets/eb6def3c-6070-41db-8cbe-05ab4ea35547)
+1. **Clone the repository**:
 
-## Tech Stack
-
-**Client:** 
-      React,
-      React Router,
-      Axios,
-      Framer Motion,
-      Tailwind CSS
-
-**Server:** Node, Express , Redis
-
-   ## Installation 
-  **Prerequisites**:
-  
-   Node.js (latest version recommended)
-   
-          
-  **Installing Redis For Windows**
-
-  1. Download Redis:
-
-     Go to the Redis for Windows GitHub page.
-            Download the latest .msi installer.
-         
-  2. Install Redis:
-
-        Run the installer and follow the setup instructions.
-         
-  3. Start Redis:
-
-     Open the command prompt and navigate to the Redis  installation directory.
-
-     **Run the command**:
-     
-     ```bash
-          redis-server
-            
-**For Ubuntu**
-1. Update package index:
-     ```bash
-        sudo apt update
-        
-  2. Install Redis:
-      ```bash
-      sudo apt install redis-server
-     
-  3. Start Redis server:
-      ```bash
-      sudo service redis-server start
-         
-  4. Test Redis: You can test if Redis is working by running:
-     ```bash
-      redis-cli ping
-         
-  You should receive a response of PONG.
-
-  For macOS
-  
-  1. Install Homebrew (if not already installed): Open a terminal and run:
-
-     ```bash
-      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-       
-2. Install Redis:
     ```bash
-    brew install redis
-     
-3. Start Redis:
-   ```bash
-   brew services start redis
-     
-4. Test Redis: Run:
-   ```bash
-   redis-cli ping
-     
- You should receive a response of PONG.
+    git clone https://github.com/your-username/chat-app.git
 
-  **Backend Setup**
-  
-  1. Clone the repository:
-     ```bash
-        git clone https://github.com/your-username/voting-app.git
-        cd voting-app/voting-app-server 
+2. **Create a new file named .env in the in chat-app-backend**:
 
-  2. Install dependencies:
-     ```bash
-        npm install
-        # or
-        yarn install
 
-  3. Start the backend server:
-     ```bash
-        npm start
-     
- **Frontend Setup**
+    ```bash
+    DB_HOST=localhost
+    DB_PORT=5432
+    DB_NAME=chat_app
+    DB_USER=your_username
+    DB_PASSWORD=your_password
+         
+    SECRET_KEY=your_secret_key
+         
+    EMAIL_USER=your_nodemailer_email
+    EMAIL_PASS=your_nodemailer_password
 
-  1.  Navigate to the frontend directory:
+Replace the values with your own database credentials, a secret key for JWT, your Cloudinary URL, and your Nodemailer email and password.   
+
+3. **Install Dependencies for All Servers and also check node version is updated**:
       ```bash
-        cd ../voting-app-client
-        
-  2. Install dependencies:
-     ```bash
-        npm install
-        # or
-        yarn install
-
-  3. Start the frontend server:
-     ```bash
-        npm start
+      node -v
     
-## API Endpoints
-  POST /api/topics: Creates a new topic.
+**For Next.js**:
 
-  GET /api/topics: Retrieves all topics.
+    
+    cd chat-app
+    npm install
+    # or
+    yarn install
 
-  GET /api/topics/vote: Retrieves topic details for voting.
+**For Node.js backend**
 
-  POST /api/topics/vote: Submits a vote.
+    cd chat-app-backend
+    npm install
+    # or
+    yarn install   
 
-  GET /api/topics/results: Retrieves voting results.
+4. **Create a new folder named uploads chat-app-backend folder if not exist , and inside it, create another folder named profile_pictures. This folder will store user profile pictures**:
 
-## Database Structure
-  Topics: Stored in Redis as hash fields. Each topic includes a description.
+    ```bash
+    mkdir uploads
+    mkdir uploads/profile_pictures   
 
-  Votes: Stored as JSON strings in Redis, tracking user votes for each topic.
+5. **Start the Application**:
+    ### Start the Next.js Development Server:
 
-## Node Dependencies
-  ****Frontend****
+       cd chat-app
+       npm run dev
+       # or
+       yarn dev   
 
-  react: For building the user interface.
+### Start the Node.js Backend Server:  
 
-  react-router-dom: For routing between pages.
+      cd chat-app-backend
+      npm run dev
+      # or
+      yarn dev   
 
-  axios: For making HTTP requests.
+### Start the WebSocket Server:
+  
+      cd socket
+      npm start
+      # or
+      yarn start  
 
-  framer-motion: For animations.
+6. **Usage**:
 
-  tailwindcss: For styling.
-        
-  ****Backend****
+    Open the application in your web browser: http://localhost:3000
 
-  express: For server setup.
+    Create an account or log in to an existing one.
+    Add friends and start conversations.    
 
-  body-parser: For parsing request bodies.
+7. **Screenshots**.
+    #### Login Page
+     ![Screenshot 2024-10-22 092919](https://github.com/user-attachments/assets/63d84d5e-381b-433a-b545-c1b145d9d981)
 
-  cors: For enabling CORS.
-
-  redis: For connecting to the Redis database.      
+    #### Main Chat Page
+      ![Screenshot 2024-10-22 092825](https://github.com/user-attachments/assets/b7068052-b7f0-4fb3-ab24-48ac9782dc49)
 
 ## Contributing
 
-  Contributions are welcome! If you'd like to report a bug or suggest a feature, please open an issue on the GitHub repository.
-
+   Contributions are welcome! If you'd like to report a bug or suggest a feature, please open an issue on the GitHub repository.
 
 ## License
 
-This project is licensed under the MIT License.
+   ChatApp is licensed under the MIT License.
 
+## Acknowledgments
 
-## Acknowledgements
-
-Special thanks to the communities and libraries that made this project possible.
+   Special thanks to the Next.js, React, and Socket.IO communities for their support and resources.    
 
