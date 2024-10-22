@@ -29,23 +29,23 @@ To run the application locally, follow these steps:
 2. **Create a new file named .env in the in chat-app-backend**:
 
 
-    ```bash
-    DB_HOST=localhost
-    DB_PORT=5432
-    DB_NAME=chat_app
-    DB_USER=your_username
-    DB_PASSWORD=your_password
+   ```bash
+   DB_HOST=localhost
+   DB_PORT=5432
+   DB_NAME=chat_app
+   DB_USER=your_username
+   DB_PASSWORD=your_password
          
-    SECRET_KEY=your_secret_key
+   SECRET_KEY=your_secret_key
          
-    EMAIL_USER=your_nodemailer_email
-    EMAIL_PASS=your_nodemailer_password
+   EMAIL_USER=your_nodemailer_email
+   EMAIL_PASS=your_nodemailer_password
 
 Replace the values with your own database credentials, a secret key for JWT, your Cloudinary URL, and your Nodemailer email and password.   
 
 3. **Install Dependencies for All Servers and also check node version is updated**:
-      ```bash
-      node -v
+   ```bash
+   node -v
     
 **For Next.js**:
 
@@ -64,9 +64,9 @@ Replace the values with your own database credentials, a secret key for JWT, you
 
 4. **Create a new folder named uploads chat-app-backend folder if not exist , and inside it, create another folder named profile_pictures. This folder will store user profile pictures**:
 
-    ```bash
-    mkdir uploads
-    mkdir uploads/profile_pictures   
+   ```bash
+   mkdir uploads
+   mkdir uploads/profile_pictures   
 
 5. **Start the Application**:
 ### Start the Next.js Development Server:
