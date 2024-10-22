@@ -44,79 +44,81 @@
             Run the installer and follow the setup instructions.
          
   3. Start Redis:
-             Open the command prompt and navigate to the Redis installation directory.
-             Run the command:
-                ```bash
-                redis-server
+     Open the command prompt and navigate to the Redis installation directory.
+        Run the command:
+         ```bash
+         redis-server
             
-        For Ubuntu
-            1. Update package index:
-                ```bash
-                sudo apt update
-             2. Install Redis:
-                ```bash
-                sudo apt install redis-server
+  For Ubuntu
+    1. Update package index:
+        ```bash
+        sudo apt update
+        
+  2. Install Redis:
+      ```bash
+      sudo apt install redis-server
      
-             3. Start Redis server:
-                ```bash
-                sudo service redis-server start
+  3. Start Redis server:
+      ```bash
+      sudo service redis-server start
          
-             4. Test Redis: You can test if Redis is working by running:
-                ```bash
-                redis-cli ping
+  4. Test Redis: You can test if Redis is working by running:
+     ```bash
+      redis-cli ping
          
-               You should receive a response of PONG.
+  You should receive a response of PONG.
 
-        For macOS
-            1. Install Homebrew (if not already installed): Open a terminal and run:
+  For macOS
+      1. Install Homebrew (if not already installed): Open a terminal and run:
 
-                ```bash
-                /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    ```bash
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
        
-             2. Install Redis:
-                 ```bash
-                  brew install redis
+2. Install Redis:
+    ```bash
+    brew install redis
      
-              3. Start Redis:
-                  ```bash
-                  brew services start redis
+3. Start Redis:
+   ```bash
+   brew services start redis
      
-              4. Test Redis: Run:
-                ```bash
-                redis-cli ping
+4. Test Redis: Run:
+   ```bash
+   redis-cli ping
      
-              You should receive a response of PONG.
+ You should receive a response of PONG.
 
   **Backend Setup**
   
-    1. Clone the repository:
-        ```bash
+  1. Clone the repository:
+     ```bash
         git clone https://github.com/your-username/voting-app.git
-        cd voting-app/backend
+        cd voting-app/voting-app-server 
 
-    2. Install dependencies:
-        ```bash
+  2. Install dependencies:
+     ```bash
         npm install
         # or
         yarn install
 
-    3. Start the backend server:
-        ```bash
-        node server.js
-        Frontend Setup
+  3. Start the backend server:
+     ```bash
+        npm start
+     
+ **Frontend Setup**
 
-    4.  Navigate to the frontend directory:
-        ```bash
-        cd ../frontend
+  4.  Navigate to the frontend directory:
+      ```bash
+        cd ../voting-app-client
         
-    5. Install dependencies:
-        ```bash
+  5. Install dependencies:
+     ```bash
         npm install
         # or
         yarn install
 
-     6. Start the frontend server:
-        ```bash
+  6. Start the frontend server:
+     ```bash
         npm start
 
 
@@ -134,14 +136,14 @@
   Votes: Stored as JSON strings in Redis, tracking user votes for each topic.
 
  **Node Dependencies**:
-    1. Frontend
+  1. Frontend
         react: For building the user interface.
         react-router-dom: For routing between pages.
         axios: For making HTTP requests.
         framer-motion: For animations.
         tailwindcss: For styling.
         
-    2. Backend
+  2. Backend
         express: For server setup.
         body-parser: For parsing request bodies.
         cors: For enabling CORS.
