@@ -34,19 +34,16 @@
           Node.js (latest version recommended)
           Redis server
           
-  **Installing Redis**:
+  **Installing Redis**
       For Windows
-          1. Download Redis:
-    
+   1. Download Redis:
             Go to the Redis for Windows GitHub page.
             Download the latest .msi installer.
          
-          2. Install Redis:
-      
+  2. Install Redis:
             Run the installer and follow the setup instructions.
          
-          3. Start Redis:
-    
+  3. Start Redis:
              Open the command prompt and navigate to the Redis installation directory.
              Run the command:
                 ```bash
