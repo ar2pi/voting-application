@@ -30,14 +30,13 @@
   **Prerequisites**:
   
    Node.js (latest version recommended)
-    
-  **Redis server**:
+   
           
   **Installing Redis For Windows**
 
   1. Download Redis:
 
-   Go to the Redis for Windows GitHub page.
+     Go to the Redis for Windows GitHub page.
             Download the latest .msi installer.
          
   2. Install Redis:
@@ -142,7 +141,7 @@
   Votes: Stored as JSON strings in Redis, tracking user votes for each topic.
 
 ## Node Dependencies
-  **Frontend**
+  ****Frontend****
 
   react: For building the user interface.
 
@@ -154,7 +153,7 @@
 
   tailwindcss: For styling.
         
-  **Backend**
+  ****Backend****
 
   express: For server setup.
 
