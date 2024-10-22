@@ -69,26 +69,26 @@ Replace the values with your own database credentials, a secret key for JWT, you
     mkdir uploads/profile_pictures   
 
 5. **Start the Application**:
-    ### Start the Next.js Development Server:
+### Start the Next.js Development Server:
 
-       cd chat-app
-       npm run dev
-       # or
-       yarn dev   
+    cd chat-app
+    npm run dev
+    # or
+    yarn dev   
 
 ### Start the Node.js Backend Server:  
 
-      cd chat-app-backend
-      npm run dev
-      # or
-      yarn dev   
+    cd chat-app-backend
+    npm run dev
+    # or
+    yarn dev   
 
 ### Start the WebSocket Server:
   
-      cd socket
-      npm start
-      # or
-      yarn start  
+    cd socket
+    npm start
+    # or
+     yarn start  
 
 6. **Usage**:
 
