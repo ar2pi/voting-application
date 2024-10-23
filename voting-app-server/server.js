@@ -36,7 +36,7 @@ app.post('/api/topics', async (req, res) => {
     await client.hSet('topics', topic, description);
     await client.hSet('votes', topic, JSON.stringify([]));
 
-    const votingUrl = `http://localhost:3000/vote/${topic}`;
+    const votingUrl = `http://localhost:3001/vote/${topic}`;
     res.json({ message: 'Topic created!', votingUrl });
 });
 
