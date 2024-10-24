@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const redis = require('redis');
 const cors = require('cors');
+require('./tracing');
 
 const app = express();
 
