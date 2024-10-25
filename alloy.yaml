@@ -1,0 +1,25 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+      http:
+
+exporters:
+  debug: {}
+
+  otlp:
+    endpoint: http://localhost:4318
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      exporters: [debug, otlp]
+    
+    metrics:
+      receivers: [otlp]
+      exporters: [debug, otlp]
+
+    logs:
+      receivers: [otlp]
+      exporters: [debug]

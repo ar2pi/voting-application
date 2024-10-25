@@ -1,5 +1,5 @@
 # Stage 1: Build the React app
-FROM node:16-alpine 
+FROM node:20-alpine 
 COPY package.json package-lock.json ./
 RUN npm install
 COPY . .
