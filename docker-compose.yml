@@ -21,7 +21,7 @@ services:
       context: ./voting-app-client
     container_name: voting-app-client
     ports:
-      - "3000:3000"
+      - "3001:3001"
     volumes:
       - client-data:/usr/share/nginx/html
     networks:
