@@ -10,12 +10,11 @@ services:
       - server-data:/app/data
     depends_on:
       - redis
-      - otel-collector
+      - alloy
     environment:
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-      - OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4318/v1/traces
-      - OTEL_SERVICE_NAME=node-service
+      - REDIS_HOST= redis
+      - REDIS_PORT= 6379
+      - ALLOY_URL= http://alloy:12345
     networks:
       - voting-app-network
 
@@ -50,15 +49,9 @@ services:
       - server
     networks:
       - voting-app-network
-  
-  otel-collector:
-    image: otel/opentelemetry-collector:latest
-    ports:
-      - "4317:4317"  # gRPC endpoint
-      - "4318:4318"  # HTTP endpoint for OTLP
-    volumes:
-      - ./alloy.yaml:/etc/otelcol/config.yaml
-    command: ["--config", "/etc/otelcol/config.yaml"]
+
+
+
 
 networks:
   voting-app-network:
@@ -67,3 +60,4 @@ networks:
 volumes:
   server-data:
   client-data:
+  alloy-data:
