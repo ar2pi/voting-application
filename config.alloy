@@ -1,7 +1,5 @@
 logging {
 	level = "debug"
-
-	// Forward internal logs to the local Loki instance.
 	write_to = [loki.relabel.alloy_logs.receiver]
 }
 
@@ -44,19 +42,19 @@ pyroscope.scrape "default" {
 
 prometheus.remote_write "mimir" {
 	endpoint {
-		url = "http://localhost:8080/api/v1/push"
+		url = "http://mimir:8080/api/v1/push"
 	}
 }
 
 loki.write "loki" {
 	endpoint {
-		url = "http://localhost:3100/api/v1/push"
+		url = "http://loki:3100/api/v1/push"
 	}
 }
 
 otelcol.exporter.otlp "tempo" {
 	client {
-		endpoint = "http://localhost:3200"
+		endpoint = "http://tempo:3200"
 
 		tls {
 			insecure = true
