@@ -14,8 +14,10 @@ services:
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-      - ALLOY_URL=http://alloy:12345
-      - OTEL_EXPORTER_OTLP_ENDPOINT=http://tempo:3200
+      - ALLOY_URL=http://localhost:12345
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:3200
+      - GRAPHITE_HOST=graphite  # Add Graphite service name here
+      - GRAPHITE_PORT=2003  # If you're sending metrics to Graphite Carbon port
     networks:
       - voting-app-network
 
@@ -58,10 +60,10 @@ services:
     volumes:
       - ./config.alloy:/etc/alloy/config.alloy
     environment:
-      REMOTE_WRITE_HOST: mimir:8080
-      LOKI_HOST: loki:3100
-      TEMPO_HOST: tempo:4318
-      PYROSCOPE_HOST: pyroscope:4040
+      REMOTE_WRITE_HOST: http://localhost:8080
+      LOKI_HOST: http://localhost:3100
+      TEMPO_HOST: http://localhost:4318
+      PYROSCOPE_HOST: http://localhost:4040
     depends_on:
       - mimir
       - loki
@@ -104,13 +106,26 @@ services:
       - "-server.http-listen-port=3200"
     ports:
       - "3200:3200"
-      - "4317:4318"
+      - "4317:4317"
 
   pyroscope:
     image: grafana/pyroscope:1.5.0
     restart: on-failure
     ports:
       - "4040:4040"
+
+
+  graphite:
+    image: graphiteapp/graphite-statsd:latest
+    container_name: graphite
+    ports:
+      - "8081:80"       # Graphite web interface
+      - "2003-2004:2003-2004"  # Graphite Carbon ports
+      - "8125:8125/udp"  # StatsD UDP port
+    environment:
+      - GRAPHITE_TIME_ZONE=UTC
+    volumes:
+      - graphite-data:/opt/graphite/storage
 
   grafana:
     image: grafana/grafana:latest
@@ -138,3 +153,4 @@ networks:
 volumes:
   server-data:
   client-data:
+  graphite-data:
