@@ -60,7 +60,7 @@ services:
     volumes:
       - ./config.alloy:/etc/alloy/config.alloy
     environment:
-      REMOTE_WRITE_HOST: mimir:8080
+      REMOTE_WRITE_HOST: mimir:9090
       LOKI_HOST: loki:3100
       TEMPO_HOST: tempo:4318
       PYROSCOPE_HOST: pyroscope:4040
@@ -97,6 +97,8 @@ services:
     restart: on-failure
     ports:
       - "3100:3100"
+    volumes:
+      - ./loki-config.yaml:/etc/grafana-config/loki-config.yaml
     networks:
       - voting-app-network
 
@@ -154,6 +156,41 @@ services:
       - mimir
       - loki
       - tempo
+    networks:
+      - voting-app-network
+
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:latest
+    container_name: otel-collector
+    command:
+      - "--config=/etc/otelcol/otel.yaml"
+    volumes:
+      - ./otel.yaml:/etc/otelcol/otel.yaml  # Mount your OTEL Collector config file
+    ports:
+      - "4317:4317"  # OTLP (Traces and Metrics) - default
+      - "55680:55680"  # gRPC endpoint for OTLP
+    networks:
+      - voting-app-network
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yaml:/etc/prometheus/prometheus.yaml
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yaml"
+    networks:
+      - voting-app-network
+
+  promtail:
+    image: grafana/promtail:latest
+    container_name: promtail
+    volumes:
+      - ./promtail.yaml:/etc/promtail/promtail.yaml
+    command: -config.file=/etc/promtail/promtail.yaml
     networks:
       - voting-app-network
 
