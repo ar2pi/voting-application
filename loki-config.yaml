@@ -2,54 +2,33 @@ auth_enabled: false
 
 server:
   http_listen_port: 3100
-  grpc_listen_port: 9095
 
 ingester:
-  wal:
-    enabled: true
-    dir: /tmp/wal
-
-  chunk_target_size: 1048576
-
-  max_chunk_age: 1h
-
-  max_chunk_idle: 5m
-
-  max_received_streams_per_user: 10
-
-  max_streams_per_user: 1000
-
-  batch_size: 100000
-  batch_timeout: 1s
-  retry_interval: 1s
-
-storage_config:
-  boltdb_shipper:
-    active_index_directory: /loki/index
-    cache_location: /loki/cache
-    store: boltdb
-    shared_store: filesystem
-
-  filesystem:
-    directory: /loki/chunks
+  lifecycler:
+    ring:
+      kvstore:
+        store: inmemory
+      replication_factor: 1
 
 schema_config:
   configs:
-    - from: 2020-01-01
-      store: boltdb
+    - from: 2020-10-24
+      store: boltdb-shipper
       object_store: filesystem
       schema: v11
       index:
-        prefix: loki_index_
+        prefix: index_
         period: 24h
 
-compactor:
-  working_directory: /loki/compactor
-  shared_store: filesystem
+storage_config:
+  boltdb_shipper:
+    active_index_directory: /tmp/loki/index
+    cache_location: /tmp/loki/cache
+    shared_store: filesystem
+  filesystem:
+    directory: /tmp/loki/chunks
 
 limits_config:
-  ingestion_rate_mb: 5
-  ingestion_rate_burst_mb: 10
-  max_streams_per_user: 1000
-
-chunk_target_size: 1048576
+  enforce_metric_name: false
+  reject_old_samples: true
+  reject_old_samples_max_age: 168h
