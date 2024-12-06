@@ -4,6 +4,12 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import CreateTopic from './components/CreateTopic';
 import Vote from './components/Vote';
 import Results from './components/Results';
+import {API_URL} from './config';
+
+console.log('Config:', API_URL);
+
+
+
 
 const App = () => {
     return (
