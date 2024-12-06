@@ -1,38 +1,52 @@
 version: '3'
+
 services:
-  server:
+  # A postgres DB used to store data by the API server microservice.
+  votting-app-database:
+    image: postgres:14.5
+    container_name: voting-app-database
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: "postgres"
+    volumes:
+      - "postgres:/var/lib/postgresql/data"
+    ports:
+      - "5432:5432"
+    networks:
+      - voting-app-network
+
+  # The API server microservice.
+  # It writes logs directly to the Loki service, exposes metrics for the Prometheus
+  # service and sends traces to the Grafana Alloy instance.
+  votting-app-server:
     build:
-      context: ./voting-app-server
+     context: ./Votting-App-Server
     container_name: voting-app-server
+    restart: always
     ports:
       - "5000:5000"
-    volumes:
-      - server-data:/app/data
+    depends_on:
+      - votting-app-database
     environment:
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
+      - NAMESPACE=production
+      - LOGS_TARGET=http://alloy:3100/loki/api/v1/push
+      - TRACING_COLLECTOR_HOST=alloy
+      - TRACING_COLLECTOR_PORT=4317
+      - OTEL_EXPORTER_OTLP_TRACES_INSECURE=true
+      - OTEL_RESOURCE_ATTRIBUTES=ip=1.2.3.5
     networks:
       - voting-app-network
 
-  client:
+  votting-app-client:
     build:
-      context: ./voting-app-client
+     context: ./Votting-App-Client
     container_name: voting-app-client
+    restart: always
     ports:
       - "3001:3001"
-    volumes:
-      - client-data:/usr/share/nginx/html
     networks:
-      - voting-app-network
-
-  redis:
-    image: "redis:alpine"
-    container_name: voting-app-redis
-    ports:
-      - "6379:6379"
-    networks:
-      - voting-app-network
-
+      - voting-app-network       
+  
   nginx:
     image: nginx:alpine
     container_name: voting-app-nginx
@@ -41,8 +55,8 @@ services:
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
     depends_on:
-      - client
-      - server
+      - votting-app-client
+      - votting-app-server
     networks:
       - voting-app-network
 
@@ -51,5 +65,4 @@ networks:
     driver: bridge
 
 volumes:
-  server-data:
-  client-data:
+  postgres:
