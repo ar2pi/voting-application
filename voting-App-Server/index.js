@@ -1,7 +1,7 @@
-const traceUtils = require('./tracing')('server', 'votting-app-server');
+const traceUtils = require('./tracing')('server', 'voting-app-server');
 const Pyroscope = require('@pyroscope/nodejs');
 const { expressMiddleware } = require('@pyroscope/nodejs');
-const logUtils = require('./logging')('votting-app-server', 'server');
+const logUtils = require('./logging')('voting-app-server', 'server');
 const cors = require('cors');
 
 (async () => {
@@ -28,7 +28,7 @@ const cors = require('cors');
 
 
     const responseBucket = new promClient.Histogram({
-        name: 'votting_request_times',
+        name: 'voting_request_times',
         help: 'Response times for the endpoints',
         labelNames: ['method', 'status', spanTag, 'endpoint', 'table', 'rows', 'columns'],
         buckets: [10, 20, 50, 100, 200, 500, 1000, 2000, 4000, 8000, 16000],
@@ -54,7 +54,7 @@ const cors = require('cors');
         res.send(await register.metrics());
     });
 
-    Pyroscope.init({ appName: 'votting-app-database-server' });
+    Pyroscope.init({ appName: 'voting-app-database-server' });
     app.use(expressMiddleware());
 
     app.post('/api/topics', async (req, res) => {
@@ -398,7 +398,7 @@ const cors = require('cors');
     
                 // Initial connection to Postgres (default database, usually 'postgres')
                 pgClient = new Client({
-                    host: 'votting-app-database',
+                    host: 'voting-app-database',
                     port: 5432,
                     user: 'postgres',
                     password: 'postgres',
@@ -429,7 +429,7 @@ const cors = require('cors');
                 // Disconnect from the current database and reconnect to the newly created one
                 await pgClient.end();
                 pgClient = new Client({
-                    host: 'votting-app-database',
+                    host: 'voting-app-database',
                     port: 5432,
                     user: 'postgres',
                     password: 'postgres',

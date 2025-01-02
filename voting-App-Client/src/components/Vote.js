@@ -7,6 +7,7 @@ import { motion } from 'framer-motion'; // Importing Framer Motion
 const Vote = () => {
     const { topic } = useParams();
     const [description, setDescription] = useState('');
+    const [topicName, setTopicName] = useState('');
     const [name, setName] = useState('');
     const [message, setMessage] = useState('');
     const [error, setError] = useState(''); // State for error messages
@@ -16,6 +17,7 @@ const Vote = () => {
         const fetchTopic = async () => {
             const response = await axios.get(`http://localhost:5000/api/topics/${topic}/vote`);
             setDescription(response.data.description);
+            setTopicName(response.data.topic);
         };
         fetchTopic();
     }, [topic]);
@@ -43,7 +45,7 @@ const Vote = () => {
         <div className="p-8">
             <h1 className="text-2xl font-bold mb-4">Vote on Topic</h1>
             <div className="bg-white p-6 rounded-lg shadow-md mb-4">
-                <p><strong>Topic:</strong> {topic}</p>
+                <p><strong>Topic:</strong> {topicName}</p>
                 <p><strong>Description:</strong> {description}</p>
             </div>
             <input
