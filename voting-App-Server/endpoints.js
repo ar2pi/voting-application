@@ -12,8 +12,8 @@ module.exports = () => {
             '/api/topics/:topic/vote',
             '/api/topics/:topic/results',
         ];
-        servicePrefix = 'votting';
-        spanTag = 'vottingdb';
+        servicePrefix = 'voting';
+        spanTag = 'votingdb';
         accumulators = [
             1,
             23,
