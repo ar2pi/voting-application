@@ -59,7 +59,7 @@ services:
       - voting-app-server
     networks:
       - voting-app-network
-  
+
   alloy:
     image: grafana/alloy:v1.3.1
     container_name: alloy
@@ -69,13 +69,30 @@ services:
       - "./alloy/config.alloy:/etc/alloy/config.alloy"
       - "./alloy/endpoints.json:/etc/alloy/endpoints.json"
       - "/var/run/docker.sock:/var/run/docker.sock"
-    command:
-      [
-        "run",
-        "--server.http.listen-addr=0.0.0.0:12345",
-        "--stability.level=public-preview",
-        "/etc/alloy/config.alloy"
-      ]
+    command: [
+      "run",
+      "--server.http.listen-addr=0.0.0.0:12345",
+      "--stability.level=public-preview",
+      "/etc/alloy/config.alloy",
+    ]
+    networks:
+      - voting-app-network
+  
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
+    privileged: true
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro 
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    ports:
+      - "8080:8080"
+    restart: always
     networks:
       - voting-app-network
 
