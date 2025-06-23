@@ -52,3 +52,170 @@ prometheus.scrape "metrics_scraper" {
   scrape_interval = "10s"
   metrics_path    = "/metrics"
 }
+
+
+// loki
+
+loki.source.api "voting" {
+    http {
+        listen_address = "0.0.0.0"
+        listen_port = "3100"
+    }
+    forward_to = [loki.process.voting.receiver]
+}
+
+loki.process "voting" {
+    stage.regex {
+        expression=`^.*?loggedtime=(?P<loggedtime>\S+)`
+    }
+    stage.timestamp {
+        source = "loggedtime"
+        format = "2006-01-02T15:04:05.000Z07:00"
+    }
+    forward_to = [loki.write.voting.receiver]
+}
+
+loki.write "voting" {
+    endpoint {
+        url = json_path(local.file.endpoints.content, ".logs.url")[0]
+        basic_auth {
+            username = json_path(local.file.endpoints.content, ".logs.basicAuth.username")[0]
+            password = json_path(local.file.endpoints.content, ".logs.basicAuth.password")[0]
+        }
+    }
+}
+
+// tempo
+
+
+otelcol.receiver.otlp "otlp_receiver" {
+    grpc {
+        endpoint = "0.0.0.0:4317"
+    }
+    output {
+        traces = [
+            otelcol.processor.batch.default.input,
+            otelcol.connector.spanlogs.autologging.input,
+        ]
+    }
+}
+otelcol.processor.batch "default" {
+    send_batch_size = 1000
+    send_batch_max_size = 2000
+    timeout = "2s"
+    output {
+        traces = [otelcol.exporter.otlp.tempo.input]
+    }
+}
+
+
+otelcol.exporter.otlp "tempo" {
+    client {
+        auth = otelcol.auth.basic.grafanacloud.handler
+        endpoint = json_path(local.file.endpoints.content, ".traces.url")[0]
+    }
+}
+
+otelcol.auth.basic "grafanacloud" {
+  username = json_path(local.file.endpoints.content, ".traces.basicAuth.username")[0]
+  password = json_path(local.file.endpoints.content, ".traces.basicAuth.password")[0]
+}
+
+
+otelcol.connector.spanlogs "autologging" {
+    spans = false
+    roots = true
+    processes = false
+    span_attributes = [ "http.method", "http.target", "http.status_code" ]
+    overrides {
+        trace_id_key = "traceId"
+    }
+    output {
+        logs = [otelcol.exporter.loki.autologging.input]
+    }
+}
+otelcol.exporter.loki "autologging" {
+    forward_to = [loki.process.autologging.receiver]
+}
+
+loki.process "autologging" {
+    forward_to = [loki.write.autologging.receiver]
+    stage.json {
+        expressions = {
+            body = "body",
+        }
+    }
+    stage.regex {
+        expression = "span=\"?(?P<span>[^\"]+)\"?\\s+dur=(?P<dur>\\d+)ns\\s+(?:http\\.method=(?P<http_method>\\w+)\\s+http\\.target=(?P<http_target>[^\\s]+)\\s+http\\.status_code=(?P<http_status_code>\\d+)\\s+)?svc=(?P<svc>[^\\s]+)\\s+traceId=(?P<traceId>[a-f0-9]+)"
+        source = "body"
+    }
+    stage.structured_metadata {
+        values = {
+            trace_id = "traceId",
+            service = "svc",
+            duration_ns = "dur",
+            span = "span",
+            http_method = "http_method",
+            http_target = "http_target",
+            http_status_code = "http_status_code",
+        }
+    }
+    stage.output {
+        source = "{{ .time }} | svc={{ .svc }} | traceId={{ .traceId }} | span={{ .span }} | duration_ns={{ .dur }}{{ if .http_method }} | http.method={{ .http_method }} http.target={{ .http_target }} http.status_code={{ .http_status_code }}{{ end }}"
+    }
+}
+
+loki.write "autologging" {
+    external_labels = {
+        job = "alloy",
+    }
+    endpoint {
+        url = json_path(local.file.endpoints.content, ".logs.url")[0]
+
+        basic_auth {
+            username = json_path(local.file.endpoints.content, ".logs.basicAuth.username")[0]
+            password = json_path(local.file.endpoints.content, ".logs.basicAuth.password")[0]
+        }
+    }
+}
+
+
+otelcol.connector.spanmetrics "tracemetrics" {
+    namespace = "traces.spanmetrics"
+    dimension {
+        name = "http.method"
+    }
+    dimension {
+        name = "http.target"
+    }
+    dimension {
+        name = "http.status_code"
+    }
+    dimension {
+        name = "service.version"
+    }
+    histogram {
+        explicit {}
+    }
+    exemplars {
+        enabled = true
+    }
+    output {
+        metrics = [otelcol.exporter.prometheus.tracemetrics.input]
+    }
+}
+
+otelcol.exporter.prometheus "tracemetrics" {
+    forward_to = [prometheus.remote_write.mimir.receiver]
+}
+otelcol.connector.servicegraph "tracemetrics" {
+    dimensions = [
+        "http.method",
+        "http.target",
+        "http.status_code",
+        "service.version",
+    ]
+    output {
+        metrics = [otelcol.exporter.prometheus.tracemetrics.input]
+    }
+}

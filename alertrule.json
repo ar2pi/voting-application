@@ -8,7 +8,7 @@
       {
         "refId": "A",
         "queryType": "promql",
-        "datasourceUid": "deormlh70y9dsa",
+        "datasourceUid": "deorp8ngjj18gd",
         "relativeTimeRange": {
           "from": 300,
           "to": 0
@@ -67,7 +67,7 @@
       {
         "refId": "A",
         "queryType": "promql",
-        "datasourceUid": "deormlh70y9dsa",
+        "datasourceUid": "deorp8ngjj18gd",
         "relativeTimeRange": {
           "from": 300,
           "to": 0
@@ -126,7 +126,7 @@
       {
         "refId": "A",
         "queryType": "promql",
-        "datasourceUid": "deormlh70y9dsa",
+        "datasourceUid": "deorp8ngjj18gd",
         "relativeTimeRange": {
           "from": 300,
           "to": 0
